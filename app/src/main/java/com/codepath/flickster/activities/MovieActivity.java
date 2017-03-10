@@ -3,8 +3,10 @@ package com.codepath.flickster.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ListView;
 
 import com.codepath.flickster.R;
+import com.codepath.flickster.adapters.MovieAdapter;
 import com.codepath.flickster.models.Movie;
 import com.codepath.flickster.network.MovieDBNetworkClient;
 import com.codepath.flickster.network.MovieNetworkClientInterface;
@@ -16,22 +18,42 @@ import java.util.ArrayList;
 
 public class MovieActivity extends AppCompatActivity {
 
+    ListView movieListView;
     ArrayList<Movie> movieList;
+    MovieAdapter movieAdapter;
     private static String LOG_TAG = "MovieActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Log.i(LOG_TAG, "onCreate : ");
+        Log.d(LOG_TAG, "onCreate : ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
+
+        // view
+        movieListView = (ListView)findViewById(R.id.movieListView);
+
+        // model
+        movieList = new ArrayList<>();
+
+        // adapter
+        movieAdapter = new MovieAdapter(this,movieList);
+
+        movieListView.setAdapter(movieAdapter);
 
         MovieDBNetworkClient.getMovieList(new MovieNetworkClientInterface() {
 
             @Override
             public void onMovieClientCompleted(JSONArray results) {
                 Log.d(LOG_TAG, "onMovieClientCompleted");
-                movieList = Movie.fromJSONArray(results);
+                
+                movieList.addAll(Movie.fromJSONArray(results));
+
+                // This is a weird quick - if you set it again,
+                // notify does now work, vs you need to addAll
+                //movieList = Movie.fromJSONArray(results);
+
+                movieAdapter.notifyDataSetChanged();
             }
 
             @Override

@@ -7,7 +7,7 @@
     tools:context="com.codepath.flickster.activities.MovieActivity">
 
     <ListView
-        android:id="@+id/lvMovies"
+        android:id="@+id/movieListView"
         android:layout_width="368dp"
         android:layout_height="495dp"
         tools:layout_editor_absoluteX="8dp"
