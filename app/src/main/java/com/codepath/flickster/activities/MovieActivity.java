@@ -5,51 +5,42 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.codepath.flickster.R;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
+import com.codepath.flickster.models.Movie;
+import com.codepath.flickster.network.MovieDBNetworkClient;
+import com.codepath.flickster.network.MovieNetworkClientInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import cz.msebera.android.httpclient.Header;
-
-;
+import java.util.ArrayList;
 
 public class MovieActivity extends AppCompatActivity {
 
+    ArrayList<Movie> movieList;
     private static String LOG_TAG = "MovieActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.i(LOG_TAG, "onCreate : ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
 
-//        GoogleExampleHttpClient c = new GoogleExampleHttpClient();
-//        c.request();
+        MovieDBNetworkClient.getMovieList(new MovieNetworkClientInterface() {
 
-        String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
-
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(url, new JsonHttpResponseHandler(){
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-
+            public void onMovieClientCompleted(JSONArray results) {
+                Log.d(LOG_TAG, "onMovieClientCompleted");
+                movieList = Movie.fromJSONArray(results);
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                try {
-                    JSONArray movieResults = response.getJSONArray("results");
-                    Log.d(LOG_TAG, "movieResults : " + movieResults);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+            public void onMovieClientFailed(JSONException e) {
+                Log.d(LOG_TAG, "onMovieClientFailed");
+                movieList = null;
             }
 
         });
     }
+
 }
