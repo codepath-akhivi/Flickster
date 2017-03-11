@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:minWidth="100sp"
         android:minHeight="100sp"
+        android:scaleType="center"
         tools:src="@mipmap/ic_launcher"/>
 
     <TextView

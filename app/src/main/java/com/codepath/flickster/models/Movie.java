@@ -1,5 +1,7 @@
 package com.codepath.flickster.models;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,8 +33,12 @@ public class Movie {
     // Getters
 
     public String getPoster_path() {
+        String size = "w342/";
 
-        return String.format(this.base_path+"%s",poster_path);
+        String url = String.format(this.base_path+"%s%s",size,poster_path);
+
+        Log.d("Movie", String.format(" %s : poster : %s", this.getTitle() , url));
+        return url;
     }
 
     public Boolean getAdult() {
@@ -68,7 +74,12 @@ public class Movie {
     }
 
     public String getBackdrop_path() {
-        return backdrop_path;
+        String size = "w780/";
+
+        String url = String.format(this.base_path+"%s%s",size, backdrop_path);
+
+        Log.d("Movie", String.format(" %s : backdrop : %s",this.getTitle() , url));
+        return url;
     }
 
     public Long getPopularity() {
@@ -98,7 +109,7 @@ public class Movie {
         //TODO get the size from configuration !
         // https://api.themoviedb.org/3/configuration?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed
 
-        this.base_path = "https://image.tmdb.org/t/p/w342/";
+        this.base_path = "https://image.tmdb.org/t/p/";
 
         this.poster_path = result.getString("poster_path");
         this.adult = result.getBoolean("adult");
