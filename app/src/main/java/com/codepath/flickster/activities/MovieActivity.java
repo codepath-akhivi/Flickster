@@ -1,5 +1,6 @@
 package com.codepath.flickster.activities;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -29,6 +30,9 @@ public class MovieActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "onCreate : ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
+
+        createCustomActionBar();
+
 
         // view
         movieListView = (ListView)findViewById(R.id.movieListView);
@@ -64,5 +68,13 @@ public class MovieActivity extends AppCompatActivity {
 
         });
     }
+
+    private void createCustomActionBar() {
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.abs_layout);
+
+    }
+
+
 
 }

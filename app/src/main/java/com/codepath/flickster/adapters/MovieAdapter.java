@@ -2,6 +2,7 @@ package com.codepath.flickster.adapters;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.codepath.flickster.R;
 import com.codepath.flickster.models.Movie;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -37,7 +39,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
 
         Movie movie = getItem(position);
         // View Holder Implementation
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -51,15 +53,35 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.imageView.setImageResource(0);
+
 
         viewHolder.title.setText(movie.getTitle());
         viewHolder.overview.setText(movie.getOverview());
 
         Boolean isPortrait = getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+
+        viewHolder.imageView.setImageResource(0);
+
+        viewHolder.imageView.setBackgroundColor(Color.LTGRAY);
+
         Picasso.with(getContext()).
                 load(isPortrait ? movie.getPoster_path() : movie.getBackdrop_path()).
-                into(viewHolder.imageView);
+                fit().
+                //into(new ImageView(getContext()), new Callback() {
+                into(viewHolder.imageView, new Callback() {
+
+                    @Override
+                    public void onSuccess() {
+                        // remove placeholder
+
+                        viewHolder.imageView.setBackgroundColor(Color.TRANSPARENT);
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
 
         return convertView;
 

@@ -8,29 +8,31 @@
         android:id="@+id/poster"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="171dp"
-        android:minHeight="256dp"
+        android:minWidth="390dp"
+        android:minHeight="219dp"
         android:scaleType="centerCrop"
-        tools:src="@drawable/poster" />
+        tools:src="@drawable/backdrop"/>
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textStyle="bold"
         tools:text="Example Title"
         android:layout_toRightOf="@+id/poster"
-        android:layout_marginLeft="11dp"
-        android:layout_marginStart="11dp" />
+        android:layout_marginLeft="11sp"
+        android:layout_marginStart="11sp"
+        android:paddingRight="8sp"/>
 
     <TextView
         android:id="@+id/overview"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Example Overview "
         android:layout_below="@+id/title"
         android:layout_alignLeft="@+id/title"
-        android:layout_alignStart="@+id/title" />
+        android:layout_alignStart="@+id/title"
+        android:paddingRight="8sp"/>
 
 </RelativeLayout>
