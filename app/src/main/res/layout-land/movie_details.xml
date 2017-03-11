@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+<RelativeLayout
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/backdrop"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="16sp"
+        android:layout_marginLeft="16sp"
+        android:textSize="30sp"
+        android:text="Logan sdhfjk ksadhfkjsd kjsahdfjkashd kjshdfjks  dhfsdhfkj kjsdhfjkdsh kjhdsfjkhdsjkfhdjskhfksdhfjk dshfjkhdjk kjhsdfjks kjsdfjksd kjhfkjhsd kjshdfjkhas jksdfhjkasd kjdhfjksad kjsdhfjksdh kjdhsfjkas" />
+
+
 </RelativeLayout>
+
+</ScrollView>

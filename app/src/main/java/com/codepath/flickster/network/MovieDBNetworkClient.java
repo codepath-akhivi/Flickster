@@ -30,7 +30,7 @@ public class MovieDBNetworkClient {
 //        this.listener = listener;
 //    }
 
-    public static void getMovieList(final MovieNetworkClientInterface listener) {
+    public static void getPlayingNowMovieList(final MovieNetworkClientInterface listener) {
 
         String url = BASE_URL + "3/movie/now_playing?api_key=" + API_KEY;
 

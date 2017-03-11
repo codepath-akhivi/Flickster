@@ -55,7 +55,7 @@ public class ListActivity extends AppCompatActivity {
         movieListView.setAdapter(movieAdapter);
 
 
-        MovieDBNetworkClient.getMovieList(new MovieNetworkClientInterface() {
+        MovieDBNetworkClient.getPlayingNowMovieList(new MovieNetworkClientInterface() {
 
             @Override
             public void onMovieClientCompleted(JSONArray results) {

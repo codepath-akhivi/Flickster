@@ -35,7 +35,7 @@ public class Movie implements Parcelable {
     // Getters
 
     public String getPoster_path() {
-        String size = "w342/";
+        String size = "w342";
 
         String url = String.format(this.base_path + "%s%s", size, poster_path);
 
@@ -76,7 +76,7 @@ public class Movie implements Parcelable {
     }
 
     public String getBackdrop_path() {
-        String size = "w780/";
+        String size = "w780";
 
         String url = String.format(this.base_path + "%s%s", size, backdrop_path);
 
@@ -168,7 +168,10 @@ public class Movie implements Parcelable {
         this.adult = in.readByte() == 1;
         this.video = in.readByte() == 1;
 
+//        String[] s = new String[]{};
+//        in.readStringArray(s);
 
+        //in.createTypedArray()
     }
 
     @Override
@@ -198,6 +201,20 @@ public class Movie implements Parcelable {
         dest.writeByte((byte) (this.adult ? 1 : 0));
         dest.writeByte((byte) (this.video ? 1 : 0));
 
+
+        JSONArray jArray = (JSONArray)this.genre_ids;
+        Object[] listdata = new Object[jArray.length()];
+
+        if (jArray != null) {
+            for (int i=0;i<jArray.length();i++){
+                try {
+                    listdata[i] = (jArray.getString(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            dest.writeArray(listdata);
+        }
 
     }
 
