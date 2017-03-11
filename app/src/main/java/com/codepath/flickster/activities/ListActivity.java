@@ -1,9 +1,12 @@
 package com.codepath.flickster.activities;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.codepath.flickster.R;
@@ -17,12 +20,12 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class MovieActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity {
 
     ListView movieListView;
     ArrayList<Movie> movieList;
     MovieAdapter movieAdapter;
-    private static String LOG_TAG = "MovieActivity";
+    private static String LOG_TAG = "ListActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,12 @@ public class MovieActivity extends AppCompatActivity {
         // view
         movieListView = (ListView)findViewById(R.id.movieListView);
 
+        movieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                lauchDetailsActivity(position);
+            }
+        });
         // model
         movieList = new ArrayList<>();
 
@@ -44,6 +53,7 @@ public class MovieActivity extends AppCompatActivity {
         movieAdapter = new MovieAdapter(this,movieList);
 
         movieListView.setAdapter(movieAdapter);
+
 
         MovieDBNetworkClient.getMovieList(new MovieNetworkClientInterface() {
 
@@ -74,6 +84,25 @@ public class MovieActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.abs_layout);
 
     }
+
+    /**
+     * Launch edit activity. Pass bundle with context
+     * @param position
+     */
+    private void lauchDetailsActivity(int position) {
+        Intent intent = new Intent(ListActivity.this, DetailsActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(String.valueOf(position) , movieList.get(position));
+        bundle.putInt("position", position);
+
+        Movie m = movieList.get(position);
+        intent.putExtra("myData", m);
+        //intent.putExtras(bundle);
+
+        startActivityForResult(intent, 1);
+    }
+
 
 
 
