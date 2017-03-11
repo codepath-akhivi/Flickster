@@ -46,7 +46,7 @@ public class MovieActivity extends AppCompatActivity {
             @Override
             public void onMovieClientCompleted(JSONArray results) {
                 Log.d(LOG_TAG, "onMovieClientCompleted");
-                
+
                 movieList.addAll(Movie.fromJSONArray(results));
 
                 // This is a weird quick - if you set it again,

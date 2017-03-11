@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.codepath.flickster.R;
 import com.codepath.flickster.models.Movie;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -70,9 +71,13 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        viewHolder.poster.setImageResource(0);
+
         viewHolder.title.setText(movie.getTitle());
         viewHolder.overview.setText(movie.getOverview());
-        //viewHolder.poster.setImageURI(movie.getPoster_path());
+        Picasso.with(getContext()).
+                load(movie.getPoster_path()).
+                into(viewHolder.poster);
 
         return convertView;
     }

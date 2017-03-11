@@ -51,6 +51,7 @@ public class MovieDBNetworkClient {
                 try {
                     movieResults = response.getJSONArray("results");
                     Log.d(LOG_TAG, "movieResults : " + movieResults);
+                    Log.d(LOG_TAG, "movieResults count : " + movieResults.length());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
