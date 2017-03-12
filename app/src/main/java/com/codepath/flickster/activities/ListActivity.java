@@ -37,7 +37,6 @@ public class ListActivity extends AppCompatActivity {
 
         createCustomActionBar();
 
-
         // view
         movieListView = (ListView)findViewById(R.id.movieListView);
 
@@ -98,18 +97,33 @@ public class ListActivity extends AppCompatActivity {
     private void lauchDetailsActivity(int position) {
         Intent intent = new Intent(ListActivity.this, DetailsActivity.class);
 
+        // bundle way
         Bundle bundle = new Bundle();
-        bundle.putParcelable(String.valueOf(position) , movieList.get(position));
+        bundle.putParcelable("myData" , movieList.get(position));
         bundle.putInt("position", position);
-
-        Movie m = movieList.get(position);
-        intent.putExtra("myData", m);
-        //intent.putExtras(bundle);
+        intent.putExtras(bundle);
 
         startActivityForResult(intent, 1);
     }
 
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Bundle b = data.getExtras();
+                if (b != null) {
+                    int p = b.getInt("position");
+                    Movie movie = b.getParcelable("myData");
+                    Log.d(LOG_TAG, "Movie : " + movie);
+
+                    if (movieList.size() >0) {
+                        movieList.set(p, movie);
+                    }
+                }
+            }
+        }
+    }
 
 
 }

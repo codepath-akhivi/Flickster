@@ -1,6 +1,7 @@
 package com.codepath.flickster.activities;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -31,6 +32,7 @@ public class DetailsActivity extends AppCompatActivity {
     private Movie movie;
     private ArrayList<Supplemental> supplementals;
     private ArrayList<Cast> casts;
+    private Bundle bundle;
 
     private static String LOG_TAG = "MovieDetailsActivity";
     @Override
@@ -39,14 +41,16 @@ public class DetailsActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "onCreate");
         super.onCreate(savedInstanceState);
 
-        movie = getIntent().getParcelableExtra("myData");
+        bundle = getIntent().getExtras();
 
+        movie = bundle.getParcelable("myData");
         if (movie == null) {
             Log.e(LOG_TAG, "Details cannot load, as movie is null");
         }
 
         setContentView(R.layout.movie_details);
         createCustomActionBar();
+
 
         TextView vote = (TextView)findViewById(R.id.vote);
         vote.setText(String.valueOf(movie.getVote_average()));
@@ -62,6 +66,7 @@ public class DetailsActivity extends AppCompatActivity {
                 .load(movie.getBackdrop_path())
                 .into((ImageView)findViewById(R.id.imageView));
 
+        renderSecondaryViews();
 
         MovieDBNetworkClient.getMovieDetails(movie, new MovieNetworkClientInterface() {
 
@@ -73,10 +78,9 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onMovieClientCompleted(JSONObject results) {
                 //Do nothing
+
                 movie.updateObject(results);
 
-                TextView tagline = (TextView)findViewById(R.id.tagline);
-                tagline.setText(movie.getTagline());
 
 
                 try {
@@ -85,14 +89,17 @@ public class DetailsActivity extends AppCompatActivity {
                     supplementals = Supplemental.fromJSONArray(videos);
 
                     JSONObject castsObject = results.getJSONObject("credits");
-                    JSONArray cast = videosObject.getJSONArray("cast");
+                    JSONArray cast = castsObject.getJSONArray("cast");
                     casts = Cast.fromJSONArray(cast);
+
+
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-
+                renderSecondaryViews();
 
             }
 
@@ -110,12 +117,41 @@ public class DetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.abs_layout);
         ((TextView)findViewById(R.id.actionBarText)).setText(movie.getTitle());
+    }
 
+    private void renderSecondaryViews() {
+
+        TextView tagline = (TextView)findViewById(R.id.tagline);
+
+        if (movie.getTagline() != null) {
+            tagline.setText(movie.getTagline());
+        }
+        if (movie.getGenres() != null) {
+            ((TextView) findViewById(R.id.genre)).setText(movie.getGenres());
+        }
+
+        String castString = "";
+
+        if (casts != null) {
+            for (int x = 0; x < (casts.size() <= 2 ? casts.size() : 2); x++) {
+                String delimiter = x == 0 ? "" : ", ";
+                castString += delimiter + casts.get(x).getName();
+            }
+        }
+        ((TextView)findViewById(R.id.casts)).setText(castString);
 
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
+        Intent intent = new Intent();
+
+        bundle.putParcelable("myData", movie);
+        intent.putExtras(bundle);
+        setResult(RESULT_OK, intent);
+
+        this.finish();
+        //super.onBackPressed();
     }
 }

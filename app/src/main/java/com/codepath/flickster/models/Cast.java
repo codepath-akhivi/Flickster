@@ -20,6 +20,10 @@ public class Cast {
     private int order;
     private String profile_path;
 
+    public String getName() {
+        return name;
+    }
+
     public Cast(JSONObject object) throws JSONException {
         this.id = object.getString("id");
         this.character = object.getString("character");

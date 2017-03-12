@@ -2,6 +2,7 @@ package com.codepath.flickster.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -39,6 +40,7 @@ public class Movie implements Parcelable {
     String homepage;
     String status;
 
+    String genres;
     // Getters
 
     public String getHomepage() {
@@ -64,6 +66,10 @@ public class Movie implements Parcelable {
 
     public Boolean getAdult() {
         return adult;
+    }
+
+    public String getGenres() {
+        return genres;
     }
 
     public String getOverview() {
@@ -171,6 +177,14 @@ public class Movie implements Parcelable {
                 this.tagline = additionalData.getString("tagline");
                 this.homepage = additionalData.getString("homepage");
                 this.status = additionalData.getString("status");
+
+                ArrayList<String> g = StringsfromJSONArray(additionalData.getJSONArray("genres"));
+                int limit = g.size();
+                if (limit > 2) {
+                    limit =2;
+                }
+                this.genres = TextUtils.join(", ",g.subList(0,limit));
+
                 //additionalData.getJSONArray()
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -198,6 +212,7 @@ public class Movie implements Parcelable {
         this.id = in.readInt();
         this.vote_count = in.readInt();
         this.vote_average = in.readInt();
+        this.popularity = in.readLong();
 
         this.adult = in.readByte() == 1;
         this.video = in.readByte() == 1;
@@ -223,6 +238,7 @@ public class Movie implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
 
 //        JSONArray genre_ids;
+
 
         dest.writeString(this.base_path);
         dest.writeString(this.poster_path);
@@ -270,5 +286,20 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
+
+    private ArrayList<String> StringsfromJSONArray(JSONArray results) {
+        ArrayList<String> items = new ArrayList<>();
+        for (int x = 0; x < results.length(); x++) {
+            try {
+                items.add(results.getJSONObject(x).getString("name"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return items;
+    }
+
 
 }
