@@ -18,6 +18,10 @@ The following **optional** features are implemented:
 
 * [√] Expose details of movie in a separat activity
 
+The following **additional** features are implemented:
+
+* [√] Network layer abstraction, to provide a convenient way to make API calls
+* [√] Model Separation 
 
 
 ## Video Walkthrough 
