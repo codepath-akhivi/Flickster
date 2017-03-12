@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class Movie implements Parcelable {
 
+    // playing now
     String base_path;
     String poster_path;
     Boolean adult;
@@ -32,7 +33,25 @@ public class Movie implements Parcelable {
     Boolean video;
     int vote_average;
 
+
+    //details
+    String tagline;
+    String homepage;
+    String status;
+
     // Getters
+
+    public String getHomepage() {
+        return homepage;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getTagline() {
+        return tagline;
+    }
 
     public String getPoster_path() {
         String size = "w342";
@@ -146,6 +165,21 @@ public class Movie implements Parcelable {
         return movies;
     }
 
+    public Movie updateObject(JSONObject additionalData) {
+        if (additionalData != null) {
+            try {
+                this.tagline = additionalData.getString("tagline");
+                this.homepage = additionalData.getString("homepage");
+                this.status = additionalData.getString("status");
+                //additionalData.getJSONArray()
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return this;
+    }
+
+
     /**
      * Use when reconstructing User object from parcel
      * This will be used only by the 'CREATOR'
@@ -168,10 +202,16 @@ public class Movie implements Parcelable {
         this.adult = in.readByte() == 1;
         this.video = in.readByte() == 1;
 
+        this.tagline = in.readString();
+        this.homepage = in.readString();
+        this.status = in.readString();
+
 //        String[] s = new String[]{};
 //        in.readStringArray(s);
+//
+//        in.createTypedArray()
 
-        //in.createTypedArray()
+
     }
 
     @Override
@@ -182,9 +222,7 @@ public class Movie implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-//        Boolean adult;
 //        JSONArray genre_ids;
-//        Boolean video;
 
         dest.writeString(this.base_path);
         dest.writeString(this.poster_path);
@@ -200,21 +238,23 @@ public class Movie implements Parcelable {
         dest.writeLong(this.popularity);
         dest.writeByte((byte) (this.adult ? 1 : 0));
         dest.writeByte((byte) (this.video ? 1 : 0));
+        dest.writeString(this.tagline);
+        dest.writeString(this.homepage);
+        dest.writeString(this.status);
 
-
-        JSONArray jArray = (JSONArray)this.genre_ids;
-        Object[] listdata = new Object[jArray.length()];
-
-        if (jArray != null) {
-            for (int i=0;i<jArray.length();i++){
-                try {
-                    listdata[i] = (jArray.getString(i));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            dest.writeArray(listdata);
-        }
+//        JSONArray jArray = (JSONArray)this.genre_ids;
+//        Object[] listdata = new Object[jArray.length()];
+//
+//        if (jArray != null) {
+//            for (int i=0;i<jArray.length();i++){
+//                try {
+//                    listdata[i] = (jArray.getString(i));
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            dest.writeArray(listdata);
+//        }
 
     }
 

@@ -17,6 +17,7 @@ import com.codepath.flickster.network.MovieNetworkClientInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -74,6 +75,11 @@ public class ListActivity extends AppCompatActivity {
             public void onMovieClientFailed(JSONException e) {
                 Log.d(LOG_TAG, "onMovieClientFailed");
                 movieList = null;
+            }
+
+            @Override
+            public void onMovieClientCompleted(JSONObject results) {
+
             }
 
         });

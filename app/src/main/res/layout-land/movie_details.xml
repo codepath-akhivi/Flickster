@@ -7,27 +7,90 @@
     android:layout_height="fill_parent">
 
 <RelativeLayout
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+>
 
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/backdrop"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:scaleType="fitXY"
+        tools:src="@drawable/backdrop"
+        />
+    <TextView
+        android:id="@+id/tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/imageView"
+        android:layout_below="@+id/imageView"
+        android:layout_marginLeft="16sp"
+        android:layout_marginRight="16sp"
+        android:layout_marginTop="8sp"
+        android:fontFamily="cursive"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        tools:text="His Time Has Come." />
+
+    <LinearLayout
+        android:id="@+id/metadata"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_below="@+id/tagline"
+        android:layout_marginLeft="16sp"
+        android:layout_marginRight="8sp">
+
+
+        <TextView
+            android:id="@+id/year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            tools:text="2017" />
+
+        <TextView
+            android:id="@+id/genre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginLeft="20sp"
+            tools:text="Action, Comedy, Documentary" />
+
+
+
+        <TextView
+            android:id="@+id/vote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            tools:text="7.1" />
+
+        <ImageView
+            android:id="@+id/starIcon"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10sp"
+            android:paddingBottom="3px"
+            android:src="@drawable/star" />
+
+    </LinearLayout>
+
 
     <TextView
+        android:id="@+id/overview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:layout_below="@+id/imageView"
+        android:layout_below="@+id/metadata"
         android:layout_marginTop="16sp"
+        android:layout_marginRight="16sp"
         android:layout_marginLeft="16sp"
-        android:textSize="30sp"
-        android:text="Logan sdhfjk ksadhfkjsd kjsahdfjkashd kjshdfjks  dhfsdhfkj kjsdhfjkdsh kjhdsfjkhdsjkfhdjskhfksdhfjk dshfjkhdjk kjhsdfjks kjsdfjksd kjhfkjhsd kjshdfjkhas jksdfhjkasd kjdhfjksad kjsdhfjksdh kjdhsfjkas" />
+        android:textSize="12sp"
+        tools:text="In the near future, a weary Logan cares for an ailing Professor X in a hide out on the Mexican border. But Logan's attempts to hide from the world and his legacy are up-ended when a young mutant arrives, being pursued by dark forces." />
 
 
 </RelativeLayout>
