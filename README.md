@@ -30,5 +30,14 @@ Here's a walkthrough of implemented user stories:
 
 <img src='https://github.com/codepath-akhivi/Flickster/blob/master/flickster.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
+## Painpoints to improve on
+
+* Image Rendering 
+* Complex data model persistence. Used Parcelable to be able to serialize, but ran into issue with JSON Arrays.
+* YouTube Player in emulator 
+* UI Layout 
+* Circular ImageViews
+
+
 
 
